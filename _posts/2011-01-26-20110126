@@ -1,0 +1,28 @@
+    Y M = M (Y M)
+
+を満たすλ式の時、
+
+    Y = λf·(λx·f (x x)) (λx·f (x x))
+
+と定義される(Yコンビネータ)。この時、Haskellでは以下のように表現できる。
+
+    fix :: (a -> a) -> a
+    fix f = f (fix f)
+
+Control.Monad.Fixに同じものがある。
+
+    ghci> :module Control.Monad.Fix
+    ghci> :type fix
+    fix :: (a -> a) -> a
+
+fixを使ってみる。再帰が用いられた関数。
+
+    fib _ 0 = 0
+    fib _ 1 = 1
+    fib fact n = n + fact (n -1)
+
+fixに渡す。
+
+    ghci> fix fib 4
+    10
+
